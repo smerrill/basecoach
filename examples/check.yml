@@ -1,0 +1,32 @@
+# This is sample YAML configuration data for a check.
+
+# You must put in a threshold at or above which the check will return a 500.
+
+# Note that with date fields you can put date math into the filters, as below.
+---
+threshold: 10
+template: >
+  {
+    "query": {
+      "filtered": {
+        "filter": {
+          "bool": {
+            "must": [
+              {
+                "type": {
+                  "value": "php-error"
+                }
+              },
+              {
+                "range": {
+                  "@timestamp": {
+                    "gte": "now-15m"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
