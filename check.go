@@ -78,6 +78,11 @@ func (check *Check) RunCheck(context *gin.Context, config Config) {
 		return
 	}
 
+	if resp.StatusCode != 200 {
+		context.String(503, "ElasticSearch returned a %d response code.", resp.StatusCode)
+		return
+	}
+
 	result := ElasticSearchResult{}
 	err = json.Unmarshal(body, &result)
 	if err != nil {
